@@ -91,8 +91,9 @@ module.exports = function (username, password) {
 		historical_data: function(ticker) {
 			return this.get('https://www.intrinio.com/api/historical_data?ticker='+ticker);
 		},
-		companies: function(query) {
-			return this.get('https://www.intrinio.com/api/companies?query='+query);
+		companies: function(query, page_size) {
+			page_size = page_size || 100;
+			return this.get('https://www.intrinio.com/api/companies?query='+query + '&page_size=' + page_size);
 		},
 		securities: function(ticker) {
 			return this.get('https://www.intrinio.com/api/securities?ticker='+ticker);
