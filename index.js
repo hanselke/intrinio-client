@@ -34,12 +34,7 @@ module.exports = function (username, password) {
 						}else{
 							resEmitter.emit('error', data, response);
 						}
-					})
-
-					if(reqCounter<numberOfRequests-1){
-						getUpdate();
-						reqCounter++
-					}
+					});
 				};
 				
 				var watcher = setInterval(getData, frequency);
