@@ -17,69 +17,36 @@ module.exports = function (username, password) {
 	  baseURL: 'https://www.intrinio.com/api'
 	}, {
 		watch: {
-			prices: function(ticker, frequency, numRequests, callback){
+			prices: (ticker, frequency, callback) => {
 				var reqCounter = 0;
 				var numberOfRequests = numRequests ? numRequests : 1 
-				var url = 'https://www.intrinio.com/api/prices?ticker='+ticker
-				if(callback){
-						const resEmitter = new ResultEmitter();
-						callback(resEmitter)
+				var url = 'https://www.intrinio.com/api/prices?ticker='+ticker;
+				const resEmitter = new ResultEmitter();
+				
+				callback(resEmitter);
 
-						function getUpdate(){
-							var watcher = setTimeout(function(){
-								console.log("Watching ticker"+ ticker + " " +frequency+" "+reqCounter)
-								rest.get(url, {username:username, password:password})
-								.on('complete', function(data, response) {
-									if(response.statusCode==200){
-										resEmitter.emit('update', data, response);
-									}else{
-										resEmitter.emit('error', data, response);
-									}
-								})
-
-								if(reqCounter<numberOfRequests-1){
-									getUpdate();
-									reqCounter++
-								}
-							}, frequency)	
+				const getData = () => {
+					console.log("Watching ticker"+ ticker + " " +frequency+" "+reqCounter)
+					rest.get(url, {username:username, password:password})
+					.on('complete', function(data, response) {
+						if(response.statusCode==200){
+							resEmitter.emit('update', data, response);
+						}else{
+							resEmitter.emit('error', data, response);
 						}
-						getUpdate();
-				}else{
-					return new Promise(function(resolve, reject) {
-						//The object to be returned in the promise.
-						const resEmitter = new ResultEmitter();
+					})
 
-						rest.get(url, {username:username, password:password})
-						.on('complete', function(data, response) {
-							resolve(resEmitter)
-							if(response.statusCode==200){
-								resEmitter.emit('update', data, response);
-							}else{
-								resEmitter.emit('error', data, response);
-							}
-						})
+					if(reqCounter<numberOfRequests-1){
+						getUpdate();
 						reqCounter++
-						function getUpdate(){
-							var watcher = setTimeout(function(){
-								console.log("Watching ticker"+ ticker + " " +frequency+" "+reqCounter)
-								rest.get(url, {username:username, password:password})
-								.on('complete', function(data, response) {
-									if(response.statusCode==200){
-										resEmitter.emit('update', data, response);
-									}else{
-										resEmitter.emit('error', data, response);
-									}
-								})
-
-								if(reqCounter<numberOfRequests){
-									getUpdate();
-									reqCounter++
-								}
-							}, frequency)	
-						}
-						getUpdate();
-					})					
-				}
+					}
+				};
+				
+				var watcher = setInterval(getData, frequency);
+				
+				getData();
+	
+				return () => clearInterval(watcher);
 			}
 		},
 		ticker: function(ticker) {
