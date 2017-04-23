@@ -51,11 +51,10 @@ module.exports = function (username, password) {
 
 						rest.get(url, {username:username, password:password})
 						.on('complete', function(data, response) {
+							resolve(resEmitter)
 							if(response.statusCode==200){
-								resolve(resEmitter)
 								resEmitter.emit('update', data, response);
 							}else{
-								resolve(resEmitter)
 								resEmitter.emit('error', data, response);
 							}
 						})
@@ -92,8 +91,8 @@ module.exports = function (username, password) {
 		historical_data: function(ticker) {
 			return this.get('https://www.intrinio.com/api/historical_data?ticker='+ticker);
 		},
-		companies: function(ticker) {
-			return this.get('https://www.intrinio.com/api/companies?ticker='+ticker);
+		companies: function(query) {
+			return this.get('https://www.intrinio.com/api/companies?query='+query);
 		},
 		securities: function(ticker) {
 			return this.get('https://www.intrinio.com/api/securities?ticker='+ticker);
