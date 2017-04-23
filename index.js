@@ -19,7 +19,6 @@ module.exports = function (username, password) {
 		watch: {
 			prices: (ticker, frequency, callback) => {
 				var reqCounter = 0;
-				var numberOfRequests = numRequests ? numRequests : 1 
 				var url = 'https://www.intrinio.com/api/prices?ticker='+ticker;
 				const resEmitter = new ResultEmitter();
 				
