@@ -1,3 +1,7 @@
+forked from ihadeed/intrinio-client
+
+adding standardized financials API
+
 [![Intrinio Logo](https://s3.amazonaws.com/intrinio-production/images/Intrinio+Logo/IntrinioLogo-Green-optimized.png)](http://www.intrinio.com)
 
 # intrinio-client

@@ -71,6 +71,10 @@ module.exports = function (username, password) {
 		},
 		news: function(ticker) {	    
 			return this.get('https://www.intrinio.com/api/news?ticker='+ticker);
+		},
+		income_statement: function(ticker) {
+
+			return this.get('https://api.intrinio.com/financials/standardized?identifier=' + ticker + '&statement=income_statement&fiscal_year=2016&fiscal_period=FY');
 		}
 	});
 	if(!username || !password){

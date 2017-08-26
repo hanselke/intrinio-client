@@ -1,6 +1,6 @@
 {
   "name": "intrinio-client",
-  "version": "0.0.5",
+  "version": "0.0.1",
   "description": "NodeJS client for the Intrinio API",
   "main": "index.js",
   "scripts": {
@@ -20,12 +20,12 @@
     "Client",
     "Intrinio"
   ],
-  "author": "J Spencer <jspenc72@gmail.com> (https://github.com/jspenc72)",
-  "license": "ISC",
+  "author": "Hansel ke <hansel@openb.net>",
+  "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/jspenc72/intrinio-client/issues"
+    "url": "https://github.com/hanselke/intrinio-client/issues"
   },
-  "homepage": "https://github.com/jspenc72/intrinio-client",
+  "homepage": "https://github.com/hanselke/intrinio-client",
   "dependencies": {
     "bluebird": "^3.1.1",
     "restler": "^3.4.0"
